@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_category_form_view_sku" model="ir.ui.view">
+        <field name="name">product.category.form.sku</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <field name="sku_prefix" placeholder="ej. KF"/>
+            </field>
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_assign_missing_sku" type="object"
+                            string="Asignar SKU a productos sin SKU"
+                            invisible="not sku_prefix"
+                            confirm="Se asignará el siguiente SKU a cada producto activo de esta categoría que no tenga. ¿Continuar?"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_category_list_view_sku" model="ir.ui.view">
+        <field name="name">product.category.list.sku</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_list_view"/>
+        <field name="arch" type="xml">
+            <field name="display_name" position="after">
+                <field name="sku_prefix"/>
+            </field>
+        </field>
+    </record>
+</odoo>

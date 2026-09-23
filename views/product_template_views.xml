@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Formulario común (plantilla y variante): datos del repuesto debajo de Marcas -->
+    <record id="product_template_form_view_repuesto" model="ir.ui.view">
+        <field name="name">product.template.form.repuesto</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="custom_product_brand.view_product_template_form_inherit_brand"/>
+        <field name="arch" type="xml">
+            <field name="brand_ids" position="after">
+                <field name="condition"/>
+                <field name="transmission_ids" widget="many2many_tags"
+                       options="{'no_create_edit': True}"/>
+                <field name="purchase_status" widget="radio" options="{'horizontal': true}"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Formulario de plantilla: la etiqueta de la referencia está fija en la vista -->
+    <record id="product_template_only_form_view_sku" model="ir.ui.view">
+        <field name="name">product.template.only.form.sku</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="default_code" position="attributes">
+                <attribute name="string">SKU interno</attribute>
+            </field>
+            <field name="default_code" position="after">
+                <field name="supplier_sku"/>
+                <field name="legacy_code" readonly="1" invisible="not legacy_code"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_tree_view_repuesto" model="ir.ui.view">
+        <field name="name">product.template.list.repuesto</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="transmission_ids" widget="many2many_tags" optional="show"/>
+                <field name="condition" optional="show"/>
+                <field name="supplier_sku" optional="hide"/>
+                <field name="purchase_status" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_search_view_repuesto" model="ir.ui.view">
+        <field name="name">product.template.search.repuesto</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="transmission_ids"/>
+                <field name="supplier_sku"/>
+                <field name="legacy_code"/>
+            </field>
+            <filter name="filter_to_purchase" position="after">
+                <filter string="No recomprar" name="filter_no_recomprar"
+                        domain="[('purchase_status', '=', 'no_recomprar')]"/>
+                <filter string="Sin SKU interno" name="filter_sin_sku"
+                        domain="[('default_code', '=', False)]"/>
+            </filter>
+            <filter name="categ_id" position="after">
+                <filter string="Código de transmisión" name="groupby_transmission"
+                        context="{'group_by': 'transmission_ids'}"/>
+                <filter string="Estado" name="groupby_condition"
+                        context="{'group_by': 'condition'}"/>
+                <filter string="Estado de compra" name="groupby_purchase_status"
+                        context="{'group_by': 'purchase_status'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

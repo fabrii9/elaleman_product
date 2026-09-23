@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_transmission_view_list" model="ir.ui.view">
+        <field name="name">product.transmission.list</field>
+        <field name="model">product.transmission</field>
+        <field name="arch" type="xml">
+            <list string="Códigos de transmisión" editable="bottom">
+                <field name="name"/>
+                <field name="product_count"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_transmission_view_search" model="ir.ui.view">
+        <field name="name">product.transmission.search</field>
+        <field name="model">product.transmission</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter string="Archivados" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="product_transmission_action" model="ir.actions.act_window">
+        <field name="name">Códigos de transmisión</field>
+        <field name="res_model">product.transmission</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_product_transmission"
+              name="Códigos de transmisión"
+              parent="stock.menu_product_in_config_stock"
+              action="product_transmission_action"
+              sequence="3"/>
+</odoo>
