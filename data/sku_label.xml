@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sin noupdate: se reaplica en cada actualización del módulo -->
+    <function model="product.template" name="_set_sku_interno_label"/>
+</odoo>

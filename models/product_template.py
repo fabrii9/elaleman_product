@@ -48,6 +48,18 @@ class ProductTemplate(models.Model):
             self.filtered(lambda t: not t.default_code)._assign_sku_from_category()
         return res
 
+    @api.model
+    def _set_sku_interno_label(self):
+        # Al instalar, Odoo no pisa la traducción existente "Referencia interna",
+        # así que la etiqueta se fuerza en todos los idiomas instalados.
+        langs = [code for code, _name in self.env['res.lang'].get_installed()]
+        fields_ = self.env['ir.model.fields'].search([
+            ('model', 'in', ('product.template', 'product.product')),
+            ('name', '=', 'default_code'),
+        ])
+        for field in fields_:
+            field.update_field_translations('field_description', {lang: 'SKU interno' for lang in langs})
+
     def _assign_sku_from_category(self):
         # Solo productos sin variantes: con variantes cada una lleva su propio SKU.
         # 'skip_sku_auto' lo usan las cargas masivas que traen el SKU ya definido.
