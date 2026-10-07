@@ -1,6 +1,6 @@
 {
     'name': 'El Alemán - Ficha de Repuestos',
-    'version': '18.0.1.0.1',
+    'version': '18.0.1.0.2',
     'category': 'Inventory/Inventory',
     'summary': 'SKU interno automático por categoría, código de transmisión, estado del repuesto, SKU de proveedor y estado de compra.',
     'description': """
@@ -19,7 +19,7 @@
           del producto y lo excluye de las sugerencias de reposición.
     """,
     'author': 'Aftermoves',
-    'depends': ['product', 'purchase_stock', 'custom_product_brand'],
+    'depends': ['product', 'sale', 'purchase_stock', 'custom_product_brand'],
     'data': [
         'security/ir.model.access.csv',
         'data/sku_label.xml',

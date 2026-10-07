@@ -10,7 +10,58 @@
                 <field name="condition"/>
                 <field name="transmission_ids" widget="many2many_tags"
                        options="{'no_create_edit': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Formulario común: estado de compra y proveedores debajo de Política de facturación -->
+    <record id="product_template_form_view_compra" model="ir.ui.view">
+        <field name="name">product.template.form.repuesto.compra</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="invoice_policy" position="after">
                 <field name="purchase_status" widget="radio" options="{'horizontal': true}"/>
+                <!-- Mismos proveedores que la pestaña Compra (mismo campo, misma lista editable) -->
+                <separator string="Proveedores" colspan="2" groups="purchase.group_purchase_user"/>
+                <field name="seller_ids" colspan="2" nolabel="1"
+                       groups="purchase.group_purchase_user"
+                       context="{'default_product_tmpl_id': id, 'product_template_invisible_variant': True, 'list_view_ref': 'elaleman_product.product_supplierinfo_list_repuesto'}"
+                       invisible="product_variant_count &gt; 1" readonly="product_variant_count &gt; 1"/>
+                <field name="variant_seller_ids" colspan="2" nolabel="1"
+                       groups="purchase.group_purchase_user"
+                       context="{'model': 'product.template', 'active_id': id, 'list_view_ref': 'elaleman_product.product_supplierinfo_list_repuesto'}"
+                       invisible="product_variant_count &lt;= 1" readonly="product_variant_count &lt;= 1"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Lista de proveedores de la ficha: la de Compra, con cantidad y moneda siempre visibles -->
+    <record id="product_supplierinfo_list_repuesto" model="ir.ui.view">
+        <field name="name">product.supplierinfo.list.repuesto</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="purchase.product_supplierinfo_tree_view2"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="1000"/>
+        <field name="arch" type="xml">
+            <field name="min_qty" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="currency_id" position="attributes">
+                <attribute name="groups"></attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_product_supplierinfo_list_repuesto" model="ir.ui.view">
+        <field name="name">product.supplierinfo.list.repuesto.product</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="elaleman_product.product_supplierinfo_list_repuesto"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="1000"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="attributes">
+                <attribute name="domain">[('product_tmpl_id', '=', parent.product_tmpl_id)]</attribute>
             </field>
         </field>
     </record>

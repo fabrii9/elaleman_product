@@ -8,6 +8,13 @@
             <field name="default_code" position="after">
                 <field name="supplier_sku"/>
             </field>
+            <!-- En la variante, los proveedores de la ficha se filtran por plantilla, igual que en Compra -->
+            <xpath expr="//field[@name='purchase_status']/following-sibling::field[@name='seller_ids'][1]" position="attributes">
+                <attribute name="context">{'default_product_tmpl_id': product_tmpl_id, 'product_template_invisible_variant': True, 'list_view_ref': 'elaleman_product.product_product_supplierinfo_list_repuesto'}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='purchase_status']/following-sibling::field[@name='variant_seller_ids'][1]" position="attributes">
+                <attribute name="context">{'model': 'product.product', 'active_id': id, 'list_view_ref': 'elaleman_product.product_product_supplierinfo_list_repuesto'}</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
