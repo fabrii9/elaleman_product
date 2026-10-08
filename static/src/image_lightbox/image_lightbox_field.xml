@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="elaleman_product.ImageLightboxField" t-inherit="web.ImageField" t-inherit-mode="primary">
+        <xpath expr="//img" position="attributes">
+            <attribute name="t-on-click">onImageClick</attribute>
+            <attribute name="t-att-title">canOpenLightbox ? "Clic para ver en grande" : ""</attribute>
+        </xpath>
+    </t>
+
+</templates>

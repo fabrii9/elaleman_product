@@ -1,6 +1,6 @@
 {
     'name': 'El Alemán - Ficha de Repuestos',
-    'version': '18.0.1.0.2',
+    'version': '18.0.1.1.0',
     'category': 'Inventory/Inventory',
     'summary': 'SKU interno automático por categoría, código de transmisión, estado del repuesto, SKU de proveedor y estado de compra.',
     'description': """
@@ -17,6 +17,7 @@
         - Campo "Estado de compra": Activo / No recomprar. "No recomprar" quita el
           tilde nativo "Se puede comprar", archiva las reglas de reabastecimiento
           del producto y lo excluye de las sugerencias de reposición.
+        - Foto del producto: clic para verla en grande (visor con zoom y descarga).
     """,
     'author': 'Aftermoves',
     'depends': ['product', 'sale', 'purchase_stock', 'custom_product_brand'],
@@ -27,7 +28,13 @@
         'views/product_category_views.xml',
         'views/product_template_views.xml',
         'views/product_product_views.xml',
+        'views/product_image_views.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'elaleman_product/static/src/image_lightbox/*',
+        ],
+    },
     'installable': True,
     'auto_install': False,
     'application': False,
