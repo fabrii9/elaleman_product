@@ -1,6 +1,6 @@
 {
     'name': 'El Alemán - Ficha de Repuestos',
-    'version': '18.0.1.1.0',
+    'version': '18.0.1.1.1',
     'category': 'Inventory/Inventory',
     'summary': 'SKU interno automático por categoría, código de transmisión, estado del repuesto, SKU de proveedor y estado de compra.',
     'description': """
