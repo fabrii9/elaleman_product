@@ -122,4 +122,18 @@
             </filter>
         </field>
     </record>
+
+    <!-- Kanban de productos: marca debajo de "A la mano" -->
+    <record id="product_template_kanban_view_marca" model="ir.ui.view">
+        <field name="name">product.template.kanban.marca</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.product_template_kanban_stock_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[field[@name='qty_available']]" position="after">
+                <div t-if="record.brand_ids.raw_value.length">
+                    Marca: <field name="brand_ids" widget="many2many_tags"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
 </odoo>
